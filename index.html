@@ -6,13 +6,27 @@
 <title>NASA Mission Explorer</title>
 <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
 <header class="nasa">
-    <h1>NASA Mission Explorer</h1>
+    <h1>🚀 NASA Mission Explorer</h1>
     <p>Explore Astronomy Picture of the Day</p>
 </header>
+
+<!-- Global HD Toggle -->
+<div class="hd-toggle-container">
+    <label class="switch">
+        <input type="checkbox" id="hdToggle">
+        <span class="slider"></span>
+    </label>
+    <span class="label-text">Prefer Normal</span>
+</div>
+
+<!-- Date Filter -->
+<div class="filter">
+    <input type="date" id="dateInput">
+    <button onclick="filterByDate()">Search</button>
+</div>
 
 <section class="boxes"></section>
 
