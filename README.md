@@ -69,11 +69,14 @@ Image download option
 Animation effects for transitions
 Light/Dark theme toggle
 
-## 🚀 Deploy (Netlify)
+## 🚀 Deploy (Vercel)
 
 1. Push this folder to GitHub
-2. In Netlify: **Add new site → Import from Git**
+2. In Vercel: **Add new site → Import from Git**
 3. Build settings:
    - **Build command**: (none)
    - **Publish directory**: `nasa-mission-explorer`
+  
+    
+  Deploy link of project:- https://nasa-project-ashen.vercel.app/
 
