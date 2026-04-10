@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <title>NASA Mission Explorer</title>
+    <meta
+      name="description"
+      content="Explore stunning NASA Astronomy Picture of the Day imagery. Browse a gallery, pick a date, and view entries in a full-screen modal."
+    />
+
+    <link rel="preconnect" href="https://api.nasa.gov" crossorigin />
+    <link rel="preconnect" href="https://images-assets.nasa.gov" crossorigin />
+
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="bg" aria-hidden="true">
+      <div class="stars"></div>
+      <div class="nebula"></div>
+      <div class="gridGlow"></div>
+    </div>
+
+    <header class="topbar">
+      <div class="brand">
+        <div class="brandMark" aria-hidden="true"></div>
+        <div class="brandText">
+          <div class="brandName">NASA Mission Explorer</div>
+          <div class="brandTag">Astronomy Picture of the Day</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a class="navLink" href="#gallery">Explore</a>
+        <a class="navLink" href="#date-explorer">Date Explorer</a>
+        <button class="navButton" id="refreshBtn" type="button">
+          Refresh gallery
+        </button>
+      </nav>
+    </header>
+
+    <main class="container">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="heroLeft">
+          <div class="statusPill" id="statusPill" role="status" aria-live="polite">
+            <span class="dot"></span>
+            <span class="statusText">Telemetry ready</span>
+          </div>
+
+          <h1 class="heroTitle" id="hero-title">
+            Explore the Universe<br />
+            with NASA Data
+          </h1>
+          <p class="heroSubtitle">
+            Browse a curated feed of NASA’s Astronomy Picture of the Day entries, then
+            target a specific date to see what the universe looked like then.
+          </p>
+
+          <div class="heroActions">
+            <a class="primaryBtn" href="#gallery">Explore gallery</a>
+            <a class="secondaryBtn" href="#date-explorer">Pick a date</a>
+          </div>
+        </div>
+
+        <aside class="heroCard" aria-label="APOD of the day preview">
+          <div class="heroCardTop">
+            <div class="heroCardLabel">APOD • Today</div>
+            <div class="heroCardMeta" id="todayMeta">Loading…</div>
+          </div>
+          <div class="heroPreview" id="todayPreview" aria-busy="true">
+            <div class="skeleton media"></div>
+          </div>
+          <div class="heroCardBottom">
+            <div class="heroCardTitle" id="todayTitle">Fetching entry…</div>
+            <button class="ghostBtn" id="openTodayBtn" type="button" disabled>
+              Open full view
+            </button>
+          </div>
+        </aside>
+      </section>
+
+      <section class="section" id="gallery" aria-labelledby="gallery-title">
+        <div class="sectionHeader">
+          <div>
+            <h2 class="sectionTitle" id="gallery-title">Mission Gallery</h2>
+            <p class="sectionSubtitle">
+              A rotating set of recent APOD entries. Click any card to open the full-screen
+              modal.
+            </p>
+          </div>
+          <div class="sectionActions">
+            <label class="toggle">
+              <input id="hdGalleryToggle" type="checkbox" />
+              <span class="toggleTrack" aria-hidden="true"></span>
+              <span class="toggleLabel">Prefer HD</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="grid" id="galleryGrid" aria-live="polite" aria-busy="true">
+          <div class="card card--skeleton">
+            <div class="skeleton media"></div>
+            <div class="skeleton line"></div>
+            <div class="skeleton line short"></div>
+          </div>
+          <div class="card card--skeleton">
+            <div class="skeleton media"></div>
+            <div class="skeleton line"></div>
+            <div class="skeleton line short"></div>
+          </div>
+          <div class="card card--skeleton">
+            <div class="skeleton media"></div>
+            <div class="skeleton line"></div>
+            <div class="skeleton line short"></div>
+          </div>
+          <div class="card card--skeleton">
+            <div class="skeleton media"></div>
+            <div class="skeleton line"></div>
+            <div class="skeleton line short"></div>
+          </div>
+          <div class="card card--skeleton">
+            <div class="skeleton media"></div>
+            <div class="skeleton line"></div>
+            <div class="skeleton line short"></div>
+          </div>
+          <div class="card card--skeleton">
+            <div class="skeleton media"></div>
+            <div class="skeleton line"></div>
+            <div class="skeleton line short"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="date-explorer" aria-labelledby="date-title">
+        <div class="sectionHeader">
+          <div>
+            <h2 class="sectionTitle" id="date-title">Date Explorer</h2>
+            <p class="sectionSubtitle">
+              Select a date and initiate retrieval from the APOD archives.
+            </p>
+          </div>
+        </div>
+
+        <div class="dateLayout">
+          <form class="panel" id="dateForm">
+            <div class="panelTitleRow">
+              <div class="panelTitle">
+                <span class="panelIcon" aria-hidden="true"></span>
+                Input coordinates
+              </div>
+              <div class="panelBadge">Chronological interface v4.0</div>
+            </div>
+
+            <div class="field">
+              <label for="dateInput">Target date</label>
+              <input id="dateInput" name="date" type="date" required />
+              <div class="hint" id="dateHint">
+                APOD starts in 1995. If a date has no entry, we’ll tell you.
+              </div>
+            </div>
+
+            <div class="fieldRow">
+              <label class="toggle">
+                <input id="hdDateToggle" type="checkbox" />
+                <span class="toggleTrack" aria-hidden="true"></span>
+                <span class="toggleLabel">Use HD when available</span>
+              </label>
+            </div>
+
+            <button class="primaryBtn full" id="dateSubmitBtn" type="submit">
+              Initiate retrieval
+            </button>
+
+            <div class="panelFooter">
+              <div class="miniStat">
+                <div class="miniLabel">Archive status</div>
+                <div class="miniValue" id="archiveStatus">Standing by</div>
+              </div>
+              <div class="miniStat">
+                <div class="miniLabel">Last target</div>
+                <div class="miniValue" id="lastTarget">—</div>
+              </div>
+            </div>
+          </form>
+
+          <article class="detailCard" id="dateResult" aria-busy="false">
+            <div class="detailTop">
+              <div class="detailPills" id="detailPills"></div>
+              <div class="detailMeta" id="detailMeta">Observation date —</div>
+            </div>
+
+            <div class="detailMedia" id="detailMedia">
+              <div class="emptyState">
+                <div class="emptyTitle">Awaiting coordinates</div>
+                <div class="emptySub">
+                  Pick a date to retrieve the archived APOD entry.
+                </div>
+              </div>
+            </div>
+
+            <div class="detailBody">
+              <h3 class="detailTitle" id="detailTitle">No target selected</h3>
+              <p class="detailText" id="detailText">
+                Use the panel to the left to select a date. You can then open the full-screen
+                view to see the media in detail.
+              </p>
+              <div class="detailActions">
+                <button class="ghostBtn" id="openDateBtn" type="button" disabled>
+                  Open full view
+                </button>
+                <a class="ghostLink" id="nasaLink" href="#" target="_blank" rel="noreferrer" aria-disabled="true">
+                  NASA site
+                </a>
+                <button class="ghostBtn" id="shareBtn" type="button" disabled>
+                  Share
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footerLeft">
+        <div class="footerBrand">NASA Mission Explorer</div>
+        <div class="footerSub">Powered by NASA APOD API</div>
+      </div>
+      <div class="footerRight">
+        <a class="footerLink" href="https://api.nasa.gov/" target="_blank" rel="noreferrer"
+          >API Docs</a
+        >
+        <a class="footerLink" href="https://github.com/" target="_blank" rel="noreferrer"
+          >GitHub</a
+        >
+      </div>
+    </footer>
+
+    <div class="modal" id="modal" aria-hidden="true" role="dialog" aria-modal="true">
+      <div class="modalBackdrop" data-close="true"></div>
+      <div class="modalPanel" role="document" aria-label="Full-screen APOD view">
+        <div class="modalTopbar">
+          <div class="modalHeading">
+            <div class="modalKicker" id="modalKicker">Deep space</div>
+            <div class="modalTitle" id="modalTitle">Loading…</div>
+          </div>
+
+          <div class="modalControls">
+            <label class="toggle compact">
+              <input id="modalHdToggle" type="checkbox" />
+              <span class="toggleTrack" aria-hidden="true"></span>
+              <span class="toggleLabel">HD</span>
+            </label>
+            <a class="ghostBtn asLink" id="modalDownload" href="#" target="_blank" rel="noreferrer" aria-disabled="true">
+              Download
+            </a>
+            <button class="iconBtn" id="modalClose" type="button" aria-label="Close">
+              ✕
+            </button>
+          </div>
+        </div>
+
+        <div class="modalContent">
+          <div class="modalMedia" id="modalMedia" aria-busy="true">
+            <div class="skeleton media"></div>
+          </div>
+          <div class="modalSide">
+            <div class="modalMetaRow">
+              <div class="metaBlock">
+                <div class="metaLabel">Observation date</div>
+                <div class="metaValue" id="modalDate">—</div>
+              </div>
+              <div class="metaBlock">
+                <div class="metaLabel">Media type</div>
+                <div class="metaValue" id="modalType">—</div>
+              </div>
+            </div>
+            <div class="modalText" id="modalText">—</div>
+
+            <div class="creditRow">
+              <div class="creditPill" id="modalCredit">Image source &amp; credits —</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./script.js" defer></script>
+  </body>
+</html>
